@@ -1,0 +1,200 @@
+-- i8i8d2d2's part spawner
+-- Version: 1.0
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+local TextButton_2 = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local UICorner_4 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.682033896, 0, 0.268844217, 0)
+Frame.Size = UDim2.new(0, 307, 0, 251)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.172638431, 0, 0.661354601, 0)
+TextButton.Size = UDim2.new(0, 200, 0, 50)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Part Jump"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 14.000
+
+UICorner.Parent = TextButton
+
+UICorner_2.Parent = Frame
+
+TextButton_2.Parent = Frame
+TextButton_2.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.BorderSizePixel = 0
+TextButton_2.Position = UDim2.new(0.172638431, 0, 0.398406386, 0)
+TextButton_2.Size = UDim2.new(0, 200, 0, 50)
+TextButton_2.Font = Enum.Font.SourceSans
+TextButton_2.Text = "Spawn Part"
+TextButton_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.TextSize = 14.000
+
+UICorner_3.Parent = TextButton_2
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.172638431, 0, 0.0916334689, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "i8i8d2d2's Part Spawners"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+UICorner_4.Parent = TextLabel
+
+-- Scripts:
+
+local function FBCMM_fake_script() -- TextButton.Spawn 
+	local script = Instance.new('LocalScript', TextButton)
+
+	local Players = game:GetService("Players")
+	local button = script.Parent
+	
+	button.MouseButton1Click:Connect(function()
+		local player = Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoid = character:WaitForChild("Humanoid")
+		local hrp = character:WaitForChild("HumanoidRootPart")
+	
+		
+		humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+	
+		
+		task.wait(0.15)
+	
+		
+		local part = Instance.new("Part")
+		part.Size = Vector3.new(4, 1, 4)
+		part.Position = hrp.Position - Vector3.new(0, 3, 0) 
+		part.Anchored = false
+		part.CanCollide = true
+		part.Material = Enum.Material.SmoothPlastic
+		part.TopSurface = Enum.SurfaceType.Smooth
+		part.BottomSurface = Enum.SurfaceType.Smooth
+		part.Color = Color3.fromRGB(255, 0, 0)
+		part.Parent = workspace
+	
+		
+		task.spawn(function()
+			local hue = 0
+			while part and part.Parent do
+				part.Color = Color3.fromHSV(hue, 1, 1)
+				hue = (hue + 0.01) % 1
+				task.wait(0.05)
+			end
+		end)
+	end)
+	
+end
+coroutine.wrap(FBCMM_fake_script)()
+local function XHSTPER_fake_script() -- Frame.Drag 
+	local script = Instance.new('LocalScript', Frame)
+
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+			
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(XHSTPER_fake_script)()
+local function CHSVX_fake_script() -- TextButton_2.Spawn 
+	local script = Instance.new('LocalScript', TextButton_2)
+
+	local Players = game:GetService("Players")
+	local button = script.Parent
+	
+	button.MouseButton1Click:Connect(function()
+		local player = Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local hrp = character:WaitForChild("HumanoidRootPart")
+	
+		local part = Instance.new("Part")
+		part.Size = Vector3.new(4, 1, 2)
+		part.Position = hrp.Position + hrp.CFrame.LookVector * 5
+		part.Anchored = false
+		part.CanCollide = true
+		part.Material = Enum.Material.Plastic
+	
+		
+		part.TopSurface = Enum.SurfaceType.Smooth
+		part.BottomSurface = Enum.SurfaceType.Smooth
+		part.LeftSurface = Enum.SurfaceType.Smooth
+		part.RightSurface = Enum.SurfaceType.Smooth
+		part.FrontSurface = Enum.SurfaceType.Smooth
+		part.BackSurface = Enum.SurfaceType.Smooth
+	
+		part.Parent = workspace
+	
+		
+		task.spawn(function()
+			local hue = 0
+			while part and part.Parent do
+				part.Color = Color3.fromHSV(hue, 1, 1)
+				hue = (hue + 0.01) % 1
+				task.wait(0.05)
+			end
+		end)
+	end)
+	
+end
+coroutine.wrap(CHSVX_fake_script)()
